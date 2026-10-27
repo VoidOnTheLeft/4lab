@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GYM FORCE — спортивный зал</title>
+<meta name="description" content="GYM FORCE — современный спортивный зал: силовые, кардио, функциональный тренинг и персональные занятия.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Переменные и база ===== */
+:root{
+  --black:#0a0a0a; --dark:#161616; --grey:#232323; --line:#2e2e2e;
+  --white:#fff; --muted:#b5b5b5; --orange:#ff6a00; --orange-2:#ff8a3d;
+  --head:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --body:"Manrope",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{background:var(--black);color:var(--white);font:400 1rem/1.65 var(--body);overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+.wrap{width:min(1140px,100% - 40px);margin-inline:auto}
+section{padding:96px 0}
+h1,h2,h3{font-family:var(--head);font-weight:800;line-height:1.02;letter-spacing:.01em}
+h2{font-size:clamp(2.2rem,5vw,3.6rem);margin-bottom:14px}
+h3{font-size:1.7rem;font-weight:700;margin-bottom:8px}
+.lead{color:var(--muted);max-width:60ch;margin-bottom:44px}
+
+/* ===== Кнопки ===== */
+.btn{display:inline-block;border:2px solid var(--orange);background:var(--orange);color:var(--black);
+  font:700 1rem var(--body);padding:13px 28px;border-radius:6px;cursor:pointer;
+  transition:transform .2s,background .2s,box-shadow .2s,color .2s}
+.btn:hover{background:var(--orange-2);border-color:var(--orange-2);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,106,0,.3)}
+.btn.ghost{background:transparent;color:var(--white);border-color:var(--white)}
+.btn.ghost:hover{background:var(--white);color:var(--black);box-shadow:none}
+.btn.sm{padding:9px 20px;font-size:.92rem}
+
+/* ===== Header ===== */
+header{position:fixed;inset:0 0 auto 0;z-index:50;background:rgba(10,10,10,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font:800 1.9rem var(--head);letter-spacing:.04em}
+.logo b{color:var(--orange)}
+nav ul{display:flex;gap:28px;align-items:center}
+nav a:not(.btn){color:var(--muted);font-weight:500;transition:color .2s}
+nav a:not(.btn):hover{color:var(--white)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--white);width:42px;height:42px;border-radius:6px;font-size:1.3rem;cursor:pointer}
+
+/* ===== Hero ===== */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 0 80px;position:relative;
+  background:linear-gradient(135deg,#1c1c1c,#0a0a0a 60%,#3a1a00)}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.92) 25%,rgba(10,10,10,.3))}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(3.4rem,10vw,7.5rem);max-width:9ch;margin-bottom:22px;animation:rise .9s ease both}
+.hero h1 span{display:block;color:var(--orange)}
+.hero p{max-width:46ch;color:#ddd;font-size:1.15rem;margin-bottom:34px;animation:rise .9s .15s ease both}
+.hero .btn{animation:rise .9s .3s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+
+/* ===== О нас ===== */
+.about{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
+.about p{color:var(--muted);margin-bottom:16px}
+.about-img{border-radius:10px;aspect-ratio:4/5;object-fit:cover;width:100%;background:linear-gradient(160deg,var(--grey),#3a1a00)}
+
+/* ===== Карточки ===== */
+.dark{background:var(--dark)}
+.grid{display:grid;gap:20px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--grey);border:1px solid var(--line);border-radius:10px;padding:30px 26px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{transform:translateY(-6px);border-color:var(--orange);box-shadow:0 14px 32px rgba(0,0,0,.4)}
+.card p{color:var(--muted);font-size:.96rem}
+.ico{font-size:2rem;margin-bottom:14px}
+.card.train{border-top:4px solid var(--orange)}
+
+/* ===== Абонементы ===== */
+.plan{display:flex;flex-direction:column}
+.plan.top{border-color:var(--orange);background:linear-gradient(180deg,#2c1a0c,var(--grey))}
+.price{font:800 3rem var(--head);margin:6px 0 2px}
+.price small{font:500 .95rem var(--body);color:var(--muted)}
+.plan ul{margin:18px 0 26px;flex:1}
+.plan li{padding:8px 0;border-bottom:1px solid var(--line);color:#ddd;font-size:.96rem}
+.plan li::before{content:"✓ ";color:var(--orange);font-weight:700}
+.note{color:var(--muted);font-size:.85rem;margin-top:18px}
+
+/* ===== Контакты и форма ===== */
+.contact{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.info li{padding:14px 0;border-bottom:1px solid var(--line)}
+.info span{display:block;color:var(--muted);font-size:.85rem}
+form{background:var(--grey);border:1px solid var(--line);border-radius:10px;padding:32px}
+label{display:block;font-weight:700;margin-bottom:6px;font-size:.95rem}
+.field{margin-bottom:18px}
+input,select{width:100%;background:var(--black);color:var(--white);border:1px solid var(--line);border-radius:6px;padding:13px 14px;font:inherit}
+input:focus,select:focus{outline:none;border-color:var(--orange)}
+.err{color:#ff7b5c;font-size:.85rem;min-height:1.2em;margin-top:4px}
+input.bad{border-color:#ff7b5c}
+.msg{margin-top:16px;padding:14px;border-radius:6px;background:rgba(255,106,0,.12);border:1px solid var(--orange);display:none}
+.msg.show{display:block}
+
+/* ===== Footer ===== */
+footer{border-top:1px solid var(--line);padding:48px 0 28px;background:var(--dark)}
+.foot{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap}
+footer ul{display:flex;flex-wrap:wrap;gap:8px 22px}
+footer a{color:var(--muted)}footer a:hover{color:var(--orange)}
+.copy{margin-top:32px;color:var(--muted);font-size:.85rem}
+
+/* ===== Появление при прокрутке ===== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== Адаптивность ===== */
+@media(max-width:960px){
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:1fr}
+  .about,.contact{grid-template-columns:1fr;gap:36px}
+  .about-img{aspect-ratio:16/10}
+}
+@media(max-width:760px){
+  section{padding:72px 0}
+  .burger{display:block}
+  nav{position:absolute;top:68px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--line);display:none}
+  nav.open{display:block}
+  nav ul{flex-direction:column;align-items:stretch;gap:0;padding:12px 20px 20px}
+  nav li a:not(.btn){display:block;padding:12px 0}
+  nav .btn{margin-top:8px;text-align:center;display:block}
+  .hero::after{background:rgba(10,10,10,.72)}
+}
+@media(max-width:520px){.g4{grid-template-columns:1fr}form{padding:22px}}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="wrap bar">
+    <a href="#top" class="logo" aria-label="GYM FORCE — на главную">GYM<b>FORCE</b></a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">☰</button>
+    <nav id="nav" aria-label="Основное меню">
+      <ul>
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#benefits">Преимущества</a></li>
+        <li><a href="#programs">Направления</a></li>
+        <li><a href="#plans">Абонементы</a></li>
+        <li><a href="#contact">Контакты</a></li>
+        <li><a href="#contact" class="btn sm">Записаться</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <img class="hero-img" alt="" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=70" onerror="this.remove()">
+  <div class="wrap">
+    <h1>Стань сильнее. <span>Стань лучше</span></h1>
+    <p>Тренируйся в зале, где есть всё для результата: свежее оборудование, опытные тренеры и атмосфера, которая не даёт останавливаться.</p>
+    <a href="#contact" class="btn">Начать тренировки</a>
+  </div>
+</section>
+
+<!-- ===== О НАС ===== -->
+<section id="about">
+  <div class="wrap about">
+    <div class="reveal">
+      <h2>Зал, в котором хочется возвращаться</h2>
+      <p>GYM FORCE — клуб для тех, кто хочет набрать массу, похудеть или просто чувствовать себя бодрее. Мы сделали просторный зал с зонами свободных весов, тренажёров и кардио, чтобы никому не приходилось ждать своей очереди.</p>
+      <p>Оборудование обслуживается регулярно, а тренеры помогают составить программу под вашу цель и уровень подготовки. Новичкам мы показываем технику, опытным атлетам — предлагаем новые задачи.</p>
+      <a href="#contact" class="btn ghost">Прийти на пробное занятие</a>
+    </div>
+    <img class="about-img reveal" alt="Тренажёрный зал с гантелями и штангами" loading="lazy"
+      src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=70" onerror="this.removeAttribute('src')">
+  </div>
+</section>
+
+<!-- ===== ПРЕИМУЩЕСТВА ===== -->
+<section id="benefits" class="dark">
+  <div class="wrap">
+    <h2 class="reveal">Почему GYM FORCE</h2>
+    <p class="lead reveal">Четыре причины, по которым занятия у нас приводят к результату.</p>
+    <div class="grid g4">
+      <article class="card reveal"><div class="ico" aria-hidden="true">🏋️</div><h3>Современное оборудование</h3><p>Тренажёры и свободные веса для работы над любой группой мышц.</p></article>
+      <article class="card reveal"><div class="ico" aria-hidden="true">🧑‍🏫</div><h3>Персональные тренеры</h3><p>Составят программу и проследят за техникой, чтобы вы не получили травму.</p></article>
+      <article class="card reveal"><div class="ico" aria-hidden="true">🕒</div><h3>Удобное расписание</h3><p>Зал открыт с утра до позднего вечера, групповые занятия идут в разное время.</p></article>
+      <article class="card reveal"><div class="ico" aria-hidden="true">🔥</div><h3>Разнообразие тренировок</h3><p>Силовые, кардио и функциональные занятия: можно менять нагрузку и не скучать.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== НАПРАВЛЕНИЯ ===== -->
+<section id="programs">
+  <div class="wrap">
+    <h2 class="reveal">Направления тренировок</h2>
+    <p class="lead reveal">Выберите формат под свою цель или сочетайте несколько.</p>
+    <div class="grid g4">
+      <article class="card train reveal"><h3>Силовые</h3><p>Работа со штангой, гантелями и тренажёрами для роста силы и мышечной массы.</p></article>
+      <article class="card train reveal"><h3>Кардио</h3><p>Беговые дорожки, велотренажёры и эллипсы для выносливости и снижения веса.</p></article>
+      <article class="card train reveal"><h3>Функциональный тренинг</h3><p>Круговые тренировки с собственным весом, петлями и гирями для всего тела.</p></article>
+      <article class="card train reveal"><h3>Персональные занятия</h3><p>Индивидуальная работа с тренером: программа, контроль техники, питание.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== АБОНЕМЕНТЫ ===== -->
+<section id="plans" class="dark">
+  <div class="wrap">
+    <h2 class="reveal">Абонементы</h2>
+    <p class="lead reveal">Три тарифа на выбор. Цены условные и приведены для примера.</p>
+    <div class="grid g3">
+      <article class="card plan reveal">
+        <h3>Старт</h3><div class="price">1 900 ₽ <small>/ месяц</small></div>
+        <p>Для тех, кто только пробует.</p>
+        <ul><li>Тренажёрный зал с 8:00 до 16:00</li><li>Вводная тренировка с тренером</li><li>Раздевалки и душевые</li></ul>
+        <a href="#contact" class="btn ghost" data-plan="Старт">Выбрать абонемент</a>
+      </article>
+      <article class="card plan top reveal">
+        <h3>Форс</h3><div class="price">2 900 ₽ <small>/ месяц</small></div>
+        <p>Самый универсальный вариант.</p>
+        <ul><li>Безлимитный вход в любое время</li><li>Все групповые занятия</li><li>Кардио-зона и функциональная зона</li><li>2 тренировки с тренером</li></ul>
+        <a href="#contact" class="btn" data-plan="Форс">Выбрать абонемент</a>
+      </article>
+      <article class="card plan reveal">
+        <h3>Про</h3><div class="price">5 500 ₽ <small>/ месяц</small></div>
+        <p>Максимум внимания к результату.</p>
+        <ul><li>Всё из тарифа «Форс»</li><li>8 персональных тренировок</li><li>План питания</li><li>Замеры и контроль прогресса</li></ul>
+        <a href="#contact" class="btn ghost" data-plan="Про">Выбрать абонемент</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== КОНТАКТЫ И ЗАПИСЬ ===== -->
+<section id="contact">
+  <div class="wrap contact">
+    <div class="reveal">
+      <h2>Запишитесь на пробное занятие</h2>
+      <p class="lead">Оставьте имя и телефон — это демонстрационная форма. Контакты ниже условные.</p>
+      <ul class="info">
+        <li><span>Адрес</span>г. Москва, ул. Примерная, д. 10</li>
+        <li><span>Часы работы</span>Пн–Пт 7:00–23:00, Сб–Вс 9:00–21:00</li>
+        <li><span>Телефон</span>+7 (000) 000-00-00</li>
+      </ul>
+    </div>
+    <form id="form" class="reveal" novalidate>
+      <div class="field"><label for="name">Имя</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Как к вам обращаться" required><div class="err" id="e-name"></div></div>
+      <div class="field"><label for="phone">Телефон</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required><div class="err" id="e-phone"></div></div>
+      <div class="field"><label for="plan">Абонемент (по желанию)</label>
+        <select id="plan" name="plan"><option value="">Пока не выбрал</option><option>Старт</option><option>Форс</option><option>Про</option></select></div>
+      <button class="btn" type="submit">Записаться на пробное</button>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div><a href="#top" class="logo">GYM<b>FORCE</b></a><p class="copy" style="margin-top:8px">г. Москва, ул. Примерная, д. 10<br>+7 (000) 000-00-00</p></div>
+      <ul aria-label="Ссылки внизу страницы">
+        <li><a href="#about">О нас</a></li><li><a href="#benefits">Преимущества</a></li>
+        <li><a href="#programs">Направления</a></li><li><a href="#plans">Абонементы</a></li><li><a href="#contact">Контакты</a></li>
+      </ul>
+    </div>
+    <p class="copy">© 2026 GYM FORCE. Учебный проект: адрес, телефон и цены условные.</p>
+  </div>
+</footer>
+
+<script>
+/* Мобильное меню */
+const nav = document.getElementById('nav'), burger = document.getElementById('burger');
+burger.addEventListener('click', () => {
+  const open = nav.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  nav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false');
+}));
+
+/* Выбор абонемента подставляет тариф в форму */
+document.querySelectorAll('[data-plan]').forEach(b =>
+  b.addEventListener('click', () => { document.getElementById('plan').value = b.dataset.plan; }));
+
+/* Появление элементов при прокрутке */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .15 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* Проверка формы (данные никуда не отправляются) */
+const form = document.getElementById('form'), msg = document.getElementById('msg');
+function check(input, errId, ok, text) {
+  document.getElementById(errId).textContent = ok ? '' : text;
+  input.classList.toggle('bad', !ok);
+  return ok;
+}
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = form.name, phone = form.phone;
+  const okName = check(name, 'e-name', name.value.trim().length >= 2, 'Введите имя (минимум 2 символа).');
+  const digits = phone.value.replace(/\D/g, '');
+  const okPhone = check(phone, 'e-phone', digits.length >= 10 && digits.length <= 15, 'Введите телефон: от 10 цифр.');
+  if (!okName || !okPhone) { msg.classList.remove('show'); return; }
+  msg.textContent = 'Спасибо, ' + name.value.trim() + '! Форма заполнена верно. Это демонстрационный сайт без сервера, поэтому заявка нигде не сохранена и не отправлена.';
+  msg.classList.add('show');
+  form.reset();
+});
+</script>
+</body>
+</html>
